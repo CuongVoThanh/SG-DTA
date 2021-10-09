@@ -1,0 +1,4 @@
+tensorboard==2.4.0
+scipy==1.6.2
+tqdm==4.59.0
+networkx==2.5
