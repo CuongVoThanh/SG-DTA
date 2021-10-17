@@ -10,9 +10,9 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Stacked Graph Drug Target Interaction")
     parser.add_argument("mode", choices=["train", "test"], help="Train or test")
     parser.add_argument("--dataset", choices=["davis", "drugchem", "kiba"], help="Choose dataset", required=True)
-    parser.add_argument("--graph_embedding", choices=["gcn", "gat", "ginconv", "gat_gcn",'embedding'], help="Choose graph_embedding for drug", required=True)
-    parser.add_argument("--node_embedding", default="fc_layer", choices=["gcn", "gat", "ginconv", "gat_gcn", "fc_layer"], help="Choose stacked graph dta", required=True)
-    parser.add_argument("--protein_model", default="embedding", choices=["embedding","gcn",'embeddingdeep'], help="Choose stacked graph dta")
+    parser.add_argument("--drug_embedding", choices=["gcn", "gat", "ginconv", "gat_gcn",'embedding'], help="Choose drug_embedding for drug", required=True)
+    parser.add_argument("--node_embedding", default="fc_layer", choices=["gcn", "gat", "ginconv", "gat_gcn", "fc_layer"], help="Choose embedding for drug-target network", required=True)
+    parser.add_argument("--protein_model", default="embedding", choices=["embedding","gcn",'embeddingdeep'], help="Choose embedding for protein target")
     parser.add_argument("--model", default="graphdta", choices=["graphdta", "sgdta",'deepdta','dgraphdta'], help="Choose model", required=True)
     parser.add_argument("--type_data", default="dataDTA", choices=["dataDTA","dgraphDTA"], help="Choose model for dataset", required=True)
     
@@ -36,10 +36,11 @@ def parse_args():
                         help="set cudnn.deterministic = True and cudnn.benchmark = False")
 
     args = parser.parse_args()
-    if args.resume_fold == 0  and args.mode == "test":
+    if args.resume_fold != 0  and args.mode == "test":
         raise Exception("args.resume_fold = 0 is set on `test` mode: can't resume testing")
     if args.train_fold != 0 and args.resume_fold != 0:
         raise Exception("Please choices one mode: resume or train_on_fold")
+
     return args
 
 def main():
