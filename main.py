@@ -14,7 +14,7 @@ def parse_args():
     parser.add_argument("--protein_embedding", default="embedding", choices=["embedding","gcn",'embeddingdeep'], help="Choose embedding for protein target")
     parser.add_argument("--model", default="graphdta", choices=["graphdta", "sgdta",'deepdta','dgraphdta'], help="Choose model", required=True)
     parser.add_argument("--network_embedding", default="gcn", choices=["gcn", "gat", "ginconv", "gat_gcn"], help="Choose embedding for drug-target network")
-    parser.add_argument("--type_data", default="dataDTA", choices=["dataDTA","dgraphDTA"], help="Choose model for dataset", required=True)
+    parser.add_argument("--data_type", default="dataDTA", choices=["dataDTA","dgraphDTA"], help="Choose model for dataset", required=True)
     
     parser.add_argument("--exp_name", help="Experiment name", required=True)    
 
