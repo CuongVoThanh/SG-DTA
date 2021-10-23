@@ -1,0 +1,20 @@
+# VSCode
+.vscode
+__pycache__
+
+# Logs file
+logs/**
+tensorboard/
+experiments/
+
+# Data csv, pt
+/data/**/*.csv
+/data/**/*.pt
+
+# Data contactmap
+/data/**/aln
+/data/**/pconsc4
+
+/data/**/deepDTA
+/data/**/dgraphDTA
+/data/**/graphDTA
