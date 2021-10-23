@@ -11,14 +11,13 @@
 2. [Install](#2-install)
 3. [Getting started](#3-getting-started)
 4. [Results](#4-results)
-5. [Repo structure](#5-repo-structure)
-<!-- 6. [Citation](#6-Citation) -->
+<!-- 5. [Citation](#5-Citation) -->
 
 ### 1. Prerequisites
-- Python == 3.8 is required will all installed including Pytorch>=1.7 with CUDA 11.0 (When you run with other verions, the results might be slightly different).
-- Pytorch Geometric for Pytorch == 1.7.0: Please check be careful to match the device used when installing.
-- rdkit == 2020.09.1: Generate the compound network.
-- Other dependencies are described in `requirements.txt`
+- [**Python==3.8.0**](https://www.python.org/) is required will all installed including [**PyTorch==1.7**](https://pytorch.org/get-started/previous-versions/) with CUDA 11.0 (When you run with other verions, the results might be slightly different).
+- [**Pytorch Geometric**](https://pytorch-geometric.readthedocs.io/en/latest/notes/installation.html) for Pytorch: Please match the device used when installing.
+- [**rdkit==2020.09.1**](https://github.com/rdkit/rdkit): Generate the compound network.
+- Other dependencies are described in [requirements.txt](https://github.com/ultralytics/yolov5/blob/master/requirements.txt) installed including
 
 ### 2. Install
 - Creating conda environment for the experiment:
@@ -64,7 +63,7 @@ pip install -r req.txt
   ```bash
   python main.py train --train_fold ${fold} --dataset ${dataset} --drug_embedding ${drug_model} --protein_embedding ${protein_model} --network_embedding ${node_embedding_model} --model ${model} --data_type ${data_type} --exp_name ${experiment_name}
   ```
-  ...
+  Please go through file [main.py](https://github.com/CuongVoThanh/SG-DTA/blob/master/main.py#L10) to see the detail information of all parameters.
 
   - Training a model from scratch:
     
@@ -96,9 +95,8 @@ pip install -r req.txt
   ```bash
   python main.py test --test_on_fold ${fold} --dataset {dataset} --drug_embedding ${drug_model} --protein_embedding ${protein_model} --network_embedding ${node_embedding_model} --model ${model} --data_type dataDTA --exp_name ${experiment_name}
   ```
-  ...
   
-  In order to evaluate model, please consistent the "exp_name" equivalently to the folder name of trained model.
+  In order to evaluate model, setting consistently the "exp_name" equivalently to the folder name of trained model.
   
   For example,
   
@@ -112,3 +110,26 @@ pip install -r req.txt
   python main.py test --test_on_fold 6 --dataset davis --graph_embedding embedding --protein_embedding embeddingdeep --network_embedding gcn --model sgdta --data_type dataDTA --exp_name "Deep_davis_gcn_fulldata"
   ```
 
+### 4. Results
+
+We use 4 evaluation metrics to perform our experiments ([evaluation_metric.py](https://github.com/CuongVoThanh/SG-DTA/blob/dev/utils/evaluation_metrics.py)) on two famous datasets Davis and Kiba. The notation ```D & T + DTN``` of architecture is the way how to represent drug, target and drug-target network feature vectors respectively. The full result and explanation of the results are reported in the paper.
+
+#### Davis
+|   Method     |  Architecture (D & T + DTN) |   MSE   | Pearson | Spearman |   CI    | 
+|    :---      |     :---:                   |  :---:  |  :---:  |  :---:   |  :---:  |
+| DeepDTA      | CNN & CNN                   | 0.24050 | 0.84260 | 0.69339  | 0.88618 | 
+| SG-DTA (our) | CNN & CNN + GAT-GCN         | 0.21762 | 0.85495 | 0.70868  | 0.89600 |
+| GraphDTA     | GIN & CNN                   | 0.22818 | 0.84649 | 0.70839  | 0.89580 | 
+| SG-DTA (our) | GIN & CNN + GAT             | 0.21936 | 0.85246 | 0.71903  | 0.90192 |
+| DGraphDTA    | GCN & GCN                   | 0.21238 | 0.85850 | 0.70696  | 0.89619 |
+| SG-DTA (our) | GCN & GCN + GAT             | 0.20946 | 0.86081 | 0.72415  | 0.90580 |
+
+#### Kiba
+|   Method     |  Architecture (D & T + DTN) |   MSE   | Pearson | Spearman |   CI    | 
+|    :---      |     :---:                   |  :---:  |  :---:  |  :---:   |  :---:  |
+| DeepDTA      | CNN & CNN                   | 0.14362 | 0.88816 | 0.88181  | 0.88865 |
+| SG-DTA (our) | CNN & CNN + GAT             | 0.14285 | 0.88890 | 0.88790  | 0.89549 |
+| GraphDTA     | GAT-GCN & CNN               | 0.13912 | 0.89180 | 0.88389  | 0.88929 |
+| SG-DTA (our) | GIN & CNN + GAT             | 0.12714 | 0.90223 | 0.89778  | 0.90211 |
+| DGraphDTA    | GCN & GCN                   | 0.12608 | 0.90283 | 0.89566  | 0.90089 |
+| SG-DTA (our) | GCN & GCN + GAT             | 0.12505 | 0.90375 | 0.89772  | 0.9031  |
