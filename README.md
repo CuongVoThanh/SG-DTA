@@ -22,7 +22,7 @@
 ### 2. Install
 - Creating conda environment for the experiment:
 ```bash
-conda create -n sgdta python=3.8 -y
+conda create -n sgdta python=3.8.11 -y
 conda activate sgdta
 ```
 - Installing PyTorch, Torchvision and Pytorch Geometric depending on the device you use to run the experiment:  
