@@ -51,7 +51,7 @@ pip install torch-geometric==1.6.3 --use-feature=2020-resolver
 - Installing **rdkit** and other dependencies:
 ```bash
 conda install -y -c conda-forge rdkit==2020.09.1
-pip install -r req.txt
+pip install -r requirements.txt
 ```
 
 ### 3. Getting started
